@@ -20,7 +20,8 @@ class RepositorioProduto():
         
 
     def Listar(self):
-        pass
+        produtos = self.db.query(models.Produto).all()
+        return produtos
 
     def Obter(self):
         pass
