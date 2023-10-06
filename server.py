@@ -30,7 +30,7 @@ def criar_usuario(usuario: schemas.User, session: Session = Depends(get_db)):
     usuario_criado = RepositorioUser(session).Criar(usuario)
     return usuario_criado
 
-@app.get('/usuarios', response_model=List[schemas.Produto])
+@app.get('/usuarios', response_model=List[schemas.User])
 def listar_usuarios(session: Session = Depends(get_db)):
     usuarios = RepositorioUser(session).Listar()
     return usuarios
