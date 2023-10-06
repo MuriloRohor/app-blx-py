@@ -1,25 +1,28 @@
+from sqlalchemy import select
 from sqlalchemy.orm import Session
 from src.schemas import schemas
 from src.infra.sqlalchemy.models import models
 
 class RepositorioUser():
 
-    def __init__(self, db: Session) -> None:
-        self.db = db
+    def __init__(self, session: Session) -> None:
+        self.session = session
 
     def Criar(self, usuario: schemas.User,):
         db_usuario = models.User(
             nome = usuario.nome,
+            senha = usuario.senha,
             telefone = usuario.telefone
         )
-        self.db.add(db_usuario)
-        self.db.commit()
-        self.db.refresh(db_usuario)
+        self.session.add(db_usuario)
+        self.session.commit()
+        self.session.refresh(db_usuario)
         return db_usuario
     
 
     def Listar(self):
-        usuarios = self.db.query(models.User).all()
+        stmt = select(models.User)
+        usuarios = self.session.execute(stmt).scalars().all()
         return usuarios
 
     def Obter(self):

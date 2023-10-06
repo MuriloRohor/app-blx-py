@@ -4,7 +4,12 @@ from typing import Optional, List
 class User(BaseModel):
     id: Optional[int] = None
     nome: str
+    senha: str
     telefone: str
+    
+    class Config:
+        orm_mode = True
+
 class Produto(BaseModel):
     id: Optional[int] = None
     nome: str
@@ -18,10 +23,8 @@ class ProdutoSimples(BaseModel):
     id: Optional[int] = None
     nome: str
     preco: float
-    class Config:
-        orm_mode = True
-    
 
+    
 class Pedido(BaseModel):
     id: Optional[int] = None
     quantidade: int
