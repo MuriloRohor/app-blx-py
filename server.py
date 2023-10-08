@@ -11,8 +11,16 @@ criar_bd()
 
 app = FastAPI()
 
+@app.delete('/produtos')
+def deletar_produto(produto: schemas.ProdutoDelete, session: Session = Depends(get_db)):
+    RepositorioProduto(session).Remover(produto)
+    return "Produto Deletado"
 
-
+@app.put('/produtos')
+def editar_produto(produto: schemas.Produto, session: Session = Depends(get_db)):
+    RepositorioProduto(session).Editar(produto)
+    return produto
+    
 @app.post('/produtos', status_code=status.HTTP_201_CREATED, response_model=schemas.ProdutoSimples)
 def criar_produto(produto: schemas.Produto, session: Session = Depends(get_db)):
     produto_criado = RepositorioProduto(session).Criar(produto)
